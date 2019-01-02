@@ -1,4 +1,4 @@
-package main
+package caesar
 
 import "testing"
 
