@@ -1,4 +1,4 @@
-package main
+package caesar
 
 func EncryptCaesar(plaintext string) string {
 	var ciphertext string
