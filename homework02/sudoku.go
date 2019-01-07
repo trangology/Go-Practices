@@ -16,13 +16,13 @@ func readSudoku(filename string) ([][]byte, error) {
 }
 
 func filter(values []byte) []byte {
-	filtered_values := make([]byte, 0)
+	filteredValues := make([]byte, 0)
 	for _, v := range values {
 		if (v >= '1' && v <= '9') || v == '.' {
-			filtered_values = append(filtered_values, v)
+			filteredValues = append(filteredValues, v)
 		}
 	}
-	return filtered_values
+	return filteredValues
 }
 
 func display(grid [][]byte) {
