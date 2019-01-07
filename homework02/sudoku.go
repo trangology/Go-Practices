@@ -35,23 +35,59 @@ func display(grid [][]byte) {
 }
 
 func group(values []byte, n int) [][]byte {
-	// PUT YOUR CODE HERE
+	times := len(values) / n
+	result := make([][]byte, 0)
+	count := 0
+
+	for i := 0; i < times; i++ {
+		var row []byte
+		for j := 0; j < times; j++ {
+			row = append(row, values[count])
+			count++
+		}
+		result = append(result, row)
+	}
+	return result
 }
 
 func getRow(grid [][]byte, row int) []byte {
-	// PUT YOUR CODE HERE
+	var valueRow []byte
+	for i := 0; i < len(grid); i++ {
+		valueRow = append(valueRow, grid[row][i])
+	}
+	return valueRow
 }
 
 func getCol(grid [][]byte, col int) []byte {
-	// PUT YOUR CODE HERE
+	var valueCol []byte
+	for i := 0; i < len(grid); i++ {
+		valueCol = append(valueCol, grid[i][col])
+	}
+	return valueCol
 }
 
 func getBlock(grid [][]byte, row int, col int) []byte {
-	// PUT YOUR CODE HERE
+	indexRow := row / 3 * 3
+	indexCol := col / 3 * 3
+	var block []byte
+
+	for i := indexRow; i < indexRow+3; i++ {
+		for j := indexCol; j < indexCol+3; j++ {
+			block = append(block, grid[i][j])
+		}
+	}
+	return block
 }
 
 func findEmptyPosition(grid [][]byte) (int, int) {
-	// PUT YOUR CODE HERE
+	for i := 0; i < len(grid); i++ {
+		for j := 0; j < len(grid); j++ {
+			if grid[i][j] == '.' {
+				return i, j
+			}
+		}
+	}
+	return -1, -1
 }
 
 func contains(values []byte, search byte) bool {
@@ -64,19 +100,70 @@ func contains(values []byte, search byte) bool {
 }
 
 func findPossibleValues(grid [][]byte, row int, col int) []byte {
-	// PUT YOUR CODE HERE
+	valuesRow := getRow(grid, row)
+	valuesCol := getCol(grid, col)
+	valuesBlock := getBlock(grid, row, col)
+	check := []byte{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'}
+
+	for _, value := range valuesRow {
+		for index, item := range check {
+			if value == item {
+				check[index] = '0'
+			}
+		}
+	}
+
+	for _, value := range valuesCol {
+		for index, item := range check {
+			if value == item {
+				check[index] = '0'
+			}
+		}
+	}
+
+	for _, value := range valuesBlock {
+		for index, item := range check {
+			if value == item {
+				check[index] = '0'
+			}
+		}
+	}
+
+	var result []byte
+	for _, value := range check {
+		if value != '0' {
+			result = append(result, value)
+		}
+	}
+	return result
 }
 
 func solve(grid [][]byte) ([][]byte, bool) {
-	// PUT YOUR CODE HERE
+	row, col := findEmptyPosition(grid)
+	if row == -1 && col == -1 {
+		return grid, true
+	}
+	arrPos := findPossibleValues(grid, row, col)
+	for _, value := range arrPos {
+		grid[row][col] = value
+		_, result := solve(grid)
+		if result == true {
+			return solve(grid)
+		}
+	}
+	grid[row][col] = '.'
+	return grid, false
 }
 
 func checkSolution(grid [][]byte) bool {
-	// PUT YOUR CODE HERE
-}
-
-func generateSudoku(N int) [][]byte {
-	// PUT YOUR CODE HERE
+	for i := 0; i < len(grid); i++ {
+		for j := 0; j < len(grid); j++ {
+			if grid[i][j] == '.' {
+				return false
+			}
+		}
+	}
+	return true
 }
 
 func main() {
