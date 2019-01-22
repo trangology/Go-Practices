@@ -6,16 +6,19 @@ type Cell struct {
 	state bool
 }
 
-func (c * Cell) GetNeighbors(x, y int, cl CellList) (neighbors int) {
+
+// find all neighbours are living
+func (c * Cell) GetNeighbours(row, col int, cl CellList) (neighbours int) {
 	around := [8][2]int{{-1, 1}, {0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}, {-1, -1}, {-1, 0}}
-	neighbors = 0
+	neighbours = 0
 
 	for _, pos := range around {
-		x += pos[0]
-		y += pos[1]
+		x := row + pos[0]
+		y := col + pos[1]
 		if x >= 0 && y >= 0 && x < len(cl.grid) && y < len(cl.grid) {
-			if c.state {
-				neighbors++
+			neighbour := cl.grid[x][y].state
+			if neighbour {
+				neighbours++
 			}
 		}
 	}

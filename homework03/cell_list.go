@@ -10,16 +10,16 @@ type CellList struct {
 	height int
 }
 
-
+// update life for all cells of list
 func (cl CellList) Update() [][]Cell {
 	for i, row := range cl.grid{
 		for j, cell := range row{
-			neighbors := cell.GetNeighbors(i, j, cl)
-			if cell.state && (neighbors < 2 || neighbors > 3) {
-				cell.state = false
+			neighbours := cell.GetNeighbours(i, j, cl)
+			if cell.state && (neighbours < 2 || neighbours > 3) {
+				cl.grid[i][j].state = false			// can not declarate cell.state = false. Must to find answer!!!
 			}
-			if !cell.state && neighbors > 3{
-				cell.state = true
+			if !cell.state && neighbours == 3{
+				cl.grid[i][j].state = true
 			}
 		}
 	}
