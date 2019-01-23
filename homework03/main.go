@@ -9,8 +9,8 @@ import (
 var game = [3][3]int{{30, 30, 1}, {40, 20, 2}, {20, 20, 1}}
 
 
-func main()  {
-	var cList CellList  // cList = list of cells
+func main() {
+	var cList CellList // cList = list of cells
 	var elapsed time.Duration
 
 	// 4 lines below will be use to improve code, but not today
@@ -20,7 +20,13 @@ func main()  {
 	height /= 2
 	**/
 
-	for index, value := range game{
+	fmt.Println("We have 3 games. First game will start after 5s... Please wait!")
+	for i := 0; i < 5; i++{
+		fmt.Printf("%d...\t", i+1)
+		time.Sleep(1000*time.Millisecond)
+	}
+
+	for index, value := range game {
 		// init screen
 		screen, _ := tcell.NewScreen()
 		if err := screen.Init(); err != nil {
@@ -47,21 +53,20 @@ func main()  {
 			// show screen
 			screen.Sync()
 
-
 			// if game can not stop, we need to stop loop to avoid case too many time and exit code 2
 			endTime := time.Now()
 			elapsed = endTime.Sub(startTime)
 
-			// elapsed has unit is nanosecond and we have 5 seconds to run game
+			// elapsed has unit is nanosecond and we have ~ 5 seconds to run game
 			if elapsed > 5000000000 {
 				break
 			}
 		}
+		screen.Clear()
+		time.Sleep(3000*time.Millisecond)
 
-		// need to find why below command not working
-		if index < 2 {
-			fmt.Printf("Game %d run in %v. Loading game %d...\t", index+1, elapsed, index+2)
-		}
+		// need to find why below command not exactly working when game is running
+		fmt.Printf("Game %d runs in %v", index+1, elapsed)
 	}
 	fmt.Print("The end.")
 }
