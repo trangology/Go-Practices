@@ -44,7 +44,9 @@ func main() {
 		startTime := time.Now()
 		for {
 			// init board of game into screen
+
 			b := Board{cList, cList.width, cList.height}
+
 			b.Init(screen, cList)
 			cList.Update()
 
