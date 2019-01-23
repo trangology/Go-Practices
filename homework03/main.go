@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-var game = [3][3]int{{30, 30, 1}, {20, 10, 1}, {20, 20, 0}}
+var game = [3][3]int{{30, 30, 1}, {20, 10, 1}, {10, 20, 1}}
 
 
 func main() {
@@ -69,7 +69,7 @@ func main() {
 		time.Sleep(3000*time.Millisecond)
 
 		// need to find why below command not exactly working when game is running
-		fmt.Printf("Game %d runs in %v", index+1, elapsed)
+		fmt.Printf("Game %d runs in %v \n", index+1, elapsed)
 	}
 	fmt.Print("The end.")
 }
