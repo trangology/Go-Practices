@@ -90,7 +90,7 @@ func TestCell_GetNeighbours(t *testing.T) {
 	for step := 0; step < len(steps); step++{
 		newClist := cellList.Update()
 		if !AsserEq(newClist, step){
-			t.Fatalf("Got incorrect result when running at step %d", step + 1)
+			t.Fatalf("Got incorrect cell list when running at step %d", step + 1)
 		}
 	}
 }
