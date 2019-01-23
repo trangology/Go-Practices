@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-var game = [3][3]int{{30, 30, 1}, {40, 20, 2}, {20, 20, 1}}
+var game = [3][3]int{{30, 30, 1}, {20, 10, 1}, {20, 20, 0}}
 
 
 func main() {
@@ -39,6 +39,9 @@ func main() {
 		screen.SetStyle(tcell.StyleDefault.Foreground(tcell.ColorWhite))
 
 		// create new list of cells for new game
+		if value[2] == 0 {
+			fmt.Print("Can not run this game. Size of cell must > 0")
+		}
 		cList = createCellList(value[0], value[1], value[2])
 
 		startTime := time.Now()
