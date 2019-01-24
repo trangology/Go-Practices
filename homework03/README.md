@@ -1,4 +1,4 @@
-# How to run 
+# How to run (Conway's Game of Life)
 
 Build package main and type below command in your terminal to see my games: 
 
