@@ -16,18 +16,20 @@ type News struct {
 var news [][]News
 
 
+func check(e error)  {
+	if e != nil{
+		panic(e)
+	}
+}
+
+
 func getContent(url string) (body *goquery.Document) {
 	res, err := http.Get(url)
-
-	if err != nil{
-		panic(err)
-	}
+	check(err)
 
 	body, err = goquery.NewDocumentFromReader(res.Body)
+	check(err)
 
-	if err != nil{
-		panic(err)
-	}
 	return 
 }
 
