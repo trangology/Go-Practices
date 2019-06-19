@@ -21,8 +21,8 @@ func IsPrime(n int) bool {
 	return true
 }
 
-func Compute(data_chunk int) (result Result) {
-	for i := 0; i < data_chunk; i++ {
+func Compute(dataChunk int) (result Result) {
+	for i := 0; i < dataChunk; i++ {
 		var primes []int
 		for number := 1; number <= 10; number++ {
 			if IsPrime(number) {
