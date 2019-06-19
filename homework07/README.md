@@ -2,8 +2,8 @@
 
 My task using [GOMAXPROCS](https://github.com/dmuth/google-go-cpu-usage/blob/master/main.go), [goroutine](https://gobyexample.com/goroutines) and [WaitGroup](https://stackoverflow.com/questions/19208725/example-for-sync-waitgroup-correct). 
 
-Firstly, find memory comsumption of function Compute(). 
+Firstly, find memory comsumption of function **Compute()**. 
 Because of memory usage limited (in this task is 15MB), 
 then need to find maximum number of workers we can use at the same time.
-Compare it with min_workers, max_workers and number of cores available. 
-Finally, use the number found with Gomaxprocs. 
+Compare it with **min_workers**, **max_workers** and **number of cores available**. 
+Finally, use the number found with **Gomaxprocs**. 
