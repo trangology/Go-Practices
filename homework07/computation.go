@@ -13,7 +13,7 @@ func IsPrime(n int) bool {
 	}
 
 	flag := math.Sqrt(float64(n))
-	for i := 2; i <= int(flag) + 1; i++ {
+	for i := 2; i <= int(flag); i++ {
 		if n % i == 0 {
 			return false
 		}
