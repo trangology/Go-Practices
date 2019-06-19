@@ -10,6 +10,7 @@ import (
 type Result [][]int
 
 
+// convert Byte to Megabyte
 func BToMB(b uint64) uint64 {
 	return b / 1000 / 1000
 }
