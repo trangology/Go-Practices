@@ -10,7 +10,7 @@ import (
 type Result [][]int
 
 
-func bToMb(b uint64) uint64 {
+func BToMB(b uint64) uint64 {
 	return b / 1000 / 1000
 }
 
@@ -20,7 +20,7 @@ func FindMaxWorkers(value, minWorkers, maxWorkers int, memUsage float64) int {
 	var m runtime.MemStats
 	runtime.ReadMemStats(&m)
 	Compute(value)
-	maxMemory := float64(bToMb(m.Sys))
+	maxMemory := float64(BToMB(m.Sys))
 	runtime.GC()
 	fmt.Printf("Maximum memory a function take = %v MB \n", maxMemory)
 
@@ -48,7 +48,7 @@ func FindMaxWorkers(value, minWorkers, maxWorkers int, memUsage float64) int {
 
 func main() {
 	lst := [4]int{0, 1, 2, 3}
-	nWorkers := FindMaxWorkers(lst[0], 2, 10, 1000)
+	nWorkers := FindMaxWorkers(lst[0], 2, 10, 15)
 
 	// parallel processing using GOMAXPROCS() and WaitGroup
 	runtime.GOMAXPROCS(nWorkers)
