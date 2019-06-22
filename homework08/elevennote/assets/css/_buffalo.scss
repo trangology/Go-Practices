@@ -1,0 +1,196 @@
+.container {
+	min-width: 320px;
+}
+
+header {
+	background-color: #62a5ee;
+	padding: 10px 20px;
+	box-sizing: border-box;
+}
+
+.logo img {
+	width: 80px;
+}
+
+.titles h1 {
+	font-size: 30px;
+	font-weight: 300;
+	color: white;
+	margin-bottom: 13px;
+	margin-top: 5px;
+}
+
+.titles h2 {
+	font-weight: 300;
+	font-size: 18px;
+	display: inline-block;
+	margin: 0;
+}
+
+.titles a {
+	color: white;
+	text-decoration: underline;
+}
+
+.titles i {
+	margin-right: 5px;
+	text-decoration: none;
+}
+
+.titles .documentation {
+	margin-left: 28px;
+}
+
+.subtitle {
+	color: white;
+	margin: 0;
+	padding: 13px 0;
+	background-color: #2a3543;
+	margin-bottom: 20px;
+}
+
+.subtitle h3 {
+	font-size: 22px;
+	font-weight: 400;
+	margin: 0;
+}
+
+table {
+	font-size: 14px;
+}
+
+table.table tbody tr td {
+	border-top: 0;
+	padding: 10px;
+}
+
+.foot {
+	text-align: right;
+	color: #c5c5c5;
+	font-weight: 300;
+}
+
+.foot a {
+	color: #8b8b8b;
+	text-decoration: underline;
+}
+
+.centered {
+	text-align: center;
+}
+
+@media all and (max-width: 770px) {
+	.titles h1 {
+		font-size: 25px;
+		margin: 15px 0 5px 0;
+	}
+}
+
+@media all and (max-width: 640px) {
+	.titles h1 {
+		font-size: 23px;
+		margin: 15px 0 5px 0;
+	}
+	.titles h2 {
+		font-size: 15px;
+	}
+	.titles .documentation {
+		margin-left: 10px;
+	}
+}
+
+@media all and (max-width: 530px) {
+	.titles h1 {
+		font-size: 20px;
+		margin: 5px 0;
+	}
+	.logo {
+		padding: 0
+	}
+	.logo img {
+		width: 100%
+	}
+	.titles .documentation {
+		margin-left: 0px;
+		margin-top: 5px;
+		display: block;
+	}
+}
+
+.bootstrap-tagsinput {
+	background-color: #fff;
+	border: 1px solid #ccc;
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	padding: 4px 6px;
+	color: #555;
+	vertical-align: middle;
+	border-radius: 4px;
+	max-width: 100%;
+	line-height: 22px;
+	cursor: text;
+  }
+  
+  .bootstrap-tagsinput input {
+	border: none;
+	box-shadow: none;
+	outline: none;
+	background-color: transparent;
+	padding: 0 6px;
+	margin: 0;
+	width: auto;
+	max-width: inherit;
+  }
+  
+  .bootstrap-tagsinput.form-control input::-moz-placeholder {
+	color: #777;
+	opacity: 1;
+  }
+  .bootstrap-tagsinput.form-control input:-ms-input-placeholder {
+	color: #777;
+  }
+  .bootstrap-tagsinput.form-control input::-webkit-input-placeholder {
+	color: #777;
+  }
+  .bootstrap-tagsinput input:focus {
+	border: none;
+	box-shadow: none;
+  }
+  .bootstrap-tagsinput .tag {
+	margin-right: 2px;
+	color: white;
+  }
+  .bootstrap-tagsinput .tag [data-role="remove"] {
+	margin-left: 8px;
+	cursor: pointer;
+  }
+  .bootstrap-tagsinput .tag [data-role="remove"]:after {
+	content: "x";
+	padding: 0px 2px;
+  }
+  .bootstrap-tagsinput .tag [data-role="remove"]:hover {
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+  .bootstrap-tagsinput .tag [data-role="remove"]:hover:active {
+	box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  }  
+
+  .label-info {
+    background-color: #2dbe60;
+  }
+
+  .label {
+    display: inline-block;
+    padding: 2px 4px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 11.844px;
+    font-weight: bold;
+    line-height: 14px;
+    color: #ffffff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    white-space: nowrap;
+    vertical-align: baseline;
+    background-color: #007bff;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+	border-radius: 3px;
+  }

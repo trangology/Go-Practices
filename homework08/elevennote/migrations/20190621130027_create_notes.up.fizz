@@ -1,0 +1,7 @@
+create_table("notes") {
+	t.Column("id", "uuid", {primary: true})
+	t.Column("title", "text", {})
+	t.Column("tag", "string", {})
+	t.Column("body", "text", {})
+	t.Timestamps()
+}
