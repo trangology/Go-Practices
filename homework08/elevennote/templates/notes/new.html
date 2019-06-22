@@ -1,0 +1,8 @@
+<div class="page-header">
+  <h2 style="margin-top: 2rem">New Note</h2> <br>
+</div>
+
+<%= formFor(note, {action: notesPath(), method: "POST"}) { %>
+  <%= partial("notes/form.html") %>
+  <%= linkTo(notesPath(), {class: "btn btn-warning", "data-confirm": "Are you sure?", body: "Cancel"}) %>
+<% } %>

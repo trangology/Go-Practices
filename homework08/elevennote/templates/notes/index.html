@@ -1,0 +1,39 @@
+<div class="page-header">
+  <br>
+  <h1>Elevennote</h1> <br> 
+</div>
+<ul class="list-unstyled list-inline">
+  <li>
+    <%= linkTo(newNotesPath(), {class: "btn btn-primary"}) { %>
+      Create New Note
+    <% } %>
+  </li> <br>
+  <form method="GET" action="/">
+    <input class="form-control form-control" type="text" placeholder="Search by tags" name='q'>
+  </form>
+</ul>
+
+<table class="table table-striped">
+  <thead>
+  <th>Tag</th>
+    <th>&nbsp;</th>
+  </thead>
+  <tbody>
+    <%= for (note) in notes { %>
+      <tr>
+      <td><%= note.Tag %></td>
+        <td>
+          <div class="pull-right">
+            <%= linkTo(notePath({ note_id: note.ID }), {class: "btn btn-info", body: "View"}) %>
+            <%= linkTo(editNotePath({ note_id: note.ID }), {class: "btn btn-warning", body: "Edit"}) %>
+            <%= linkTo(notePath({ note_id: note.ID }), {class: "btn btn-danger", "data-method": "DELETE", "data-confirm": "Are you sure?", body: "Destroy"}) %>
+          </div>
+        </td>
+      </tr>
+    <% } %>
+  </tbody>
+</table>
+
+<div class="text-center">
+  <%= paginator(pagination) %>
+</div>

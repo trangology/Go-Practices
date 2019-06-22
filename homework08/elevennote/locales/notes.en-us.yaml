@@ -1,0 +1,6 @@
+- id: "note.created.success"
+  translation: "Note was successfully created."
+- id: "note.updated.success"
+  translation: "Note was successfully updated."
+- id: "note.destroyed.success"
+  translation: "Note was successfully destroyed."

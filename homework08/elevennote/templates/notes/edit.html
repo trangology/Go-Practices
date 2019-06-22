@@ -1,0 +1,8 @@
+<div class="page-header">
+  <h1>Edit Note</h1>
+</div>
+
+<%= formFor(note, {action: notePath({ note_id: note.ID }), method: "PUT"}) { %>
+  <%= partial("notes/form.html") %>
+  <%= linkTo(notePath({ note_id: note.ID }), {class: "btn btn-warning", "data-confirm": "Are you sure?", body: "Cancel"}) %>
+<% } %>
