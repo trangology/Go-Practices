@@ -1,2 +1,1 @@
-### This app using framwork Buffalo 
-
+### This app using Buffalo framework
