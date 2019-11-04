@@ -2,52 +2,55 @@ package main
 
 import (
 	"fmt"
-	"github.com/PuerkitoBio/goquery"
-	"github.com/go-telegram-bot-api/telegram-bot-api"
 	"log"
 	"net/http"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/PuerkitoBio/goquery"
+	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
 var schedule [][]string
 var weekDay = [...]string{"sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"}
 
-
 func getPage(group string) (content *goquery.Document) {
-	url := domain + group  + "/raspisanie_zanyatiy_" + group + ".htm"
+	url := domain + group + "/raspisanie_zanyatiy_" + group + ".htm"
 	res, err := http.Get(url)
-	if err != nil{
+	if err != nil {
 		panic(err)
 	}
 
 	content, err = goquery.NewDocumentFromReader(res.Body)
-	if err != nil{
+	if err != nil {
 		panic(err)
 	}
 	return
 }
 
-func parseSchedule(doc *goquery.Document, day string) [][]string{
+func parseSchedule(doc *goquery.Document, day string) [][]string {
 	var timeList, locationList, lesionList []string
 	doc.Find("table").Each(func(i int, tableTag *goquery.Selection) {
 		idName, _ := tableTag.Attr("id")
 		if idName == day {
-			tableTag.Find("td").Each(func(i int, TdTag *goquery.Selection) {    	// find all tags <td>
-				TdTag.Find("span").Each(func(i int, spanTag *goquery.Selection) {     // find all tags <span> in tag <td>
+			// find all tags <td>
+			tableTag.Find("td").Each(func(i int, TdTag *goquery.Selection) {
+				// find all tags <span> in tag <td>
+				TdTag.Find("span").Each(func(i int, spanTag *goquery.Selection) {
 					className, _ := spanTag.Parent().Attr("class")
-					if className == "time" { 		// check class name of tag <span>
+					if className == "time" {
 						if spanTag.Text() != "День" {
 							timeList = append(timeList, spanTag.Text())
 						}
 					}
-					if className == "room" { 			// check class name of tag <span>
+					if className == "room" {
 						locationList = append(locationList, spanTag.Text())
 					}
 				})
 
-				TdTag.Find("dl").Each(func(i int, tdTag *goquery.Selection) {   // find all tags <dl> in tag <td>
+				// find all tags <dl> in tag <td>
+				TdTag.Find("dl").Each(func(i int, tdTag *goquery.Selection) {
 					className, _ := tdTag.Parent().Attr("class")
 					if className == "room" {
 						locationList = append(locationList, tdTag.Text())
@@ -65,21 +68,25 @@ func parseSchedule(doc *goquery.Document, day string) [][]string{
 }
 
 func res(result int) (reply string) {
-	if result == 0{
-		reply = "Trang, no class on this day :))"
+	if result == 0 {
+		reply = "Trang, you have no class on this day :))"
 	}
 
 	if 0 < result && result < 7 {
-		index := result * 3			// find exactly day in schedule array
+		// result * 3 for timeList, locationList and lesionList
+		index := result * 3
 		for k := 0; k < len(schedule[index]); k++ {
 			reply += schedule[index][k] + "\n" + schedule[index+1][k] + "\n" + schedule[index+2][k] + "\n\n"
 		}
 	}
 
-	if result == 7{
+	if result == 7 {
 		for i := 0; i < 21; i = i + 3 {
 			if i != 0 {
-				reply += strings.ToUpper(weekDay[i/3]) + "\n\n"	// reply day of week has schedule
+				reply += strings.ToUpper(weekDay[i/3]) + "\n\n"
+				if len(schedule[i]) == 0 {
+					reply += "You have no class on this day" + "\n\n\n\n"
+				}
 			}
 			for k := 0; k < len(schedule[i]); k++ {
 				reply += schedule[i][k] + "\n" + schedule[i+1][k] + "\n" + schedule[i+2][k] + "\n\n"
@@ -87,14 +94,16 @@ func res(result int) (reply string) {
 		}
 
 	}
+	fmt.Print(len(schedule))
 	return
 }
 
-
+// this func will return 0 for Sunday through to 6 for Saturday
+// and 7 for all days of the week
 func processCommand(command string, group string) string {
 	f := getPage(group)
 	var today, tomorrow int
-	needReply := 7
+	request := 7
 
 	if command == "today" {
 		today = int(time.Now().Weekday())
@@ -102,28 +111,27 @@ func processCommand(command string, group string) string {
 
 	if command == "tomorrow" {
 		tomorrow = int(time.Now().Weekday()) + 1
-		if tomorrow == 7{
-			tomorrow = 0
+		if tomorrow == 7 {
+			request = 0
 		}
 	}
 
-	for i := 0; i <= 6; i++{
+	for i := 0; i <= 6; i++ {
 		date := strconv.Itoa(i) + "day"
-		fmt.Print(parseSchedule(f, date))
-		if weekDay[i] == command || today == int(i) || tomorrow == int(i){
-			needReply = i
+		parseSchedule(f, date)
+		if weekDay[i] == command || today == int(i) || tomorrow == int(i) {
+			request = i
 		}
 	}
 
 	if command == "all" {
-		needReply = 7
+		request = 7
 	}
 
-	return res(needReply)
-
+	return res(request)
 }
 
-func main()  {
+func main() {
 	bot, err := tgbotapi.NewBotAPI(teleToken)
 	if err != nil {
 		log.Fatal(err)
@@ -149,12 +157,12 @@ func main()  {
 		log.Printf("[%s] %s", update.Message.From.UserName, update.Message.Text)
 
 		message := update.Message.Text
-		
+
 		whiteSpace := strings.Index(message, " ")
 		group := message[1:whiteSpace]
-		command := message[whiteSpace + 1:]
+		command := message[whiteSpace+1:]
 
-		res := processCommand(command, group)
+		mess := processCommand(command, group)
 
 		/** switch update.Message.Command() {
 		case "start":
@@ -163,7 +171,7 @@ func main()  {
 			reply = "Me too :("
 		**/
 
-		msg := tgbotapi.NewMessage(update.Message.Chat.ID, res)
+		msg := tgbotapi.NewMessage(update.Message.Chat.ID, mess)
 
 		bot.Send(msg)
 	}
