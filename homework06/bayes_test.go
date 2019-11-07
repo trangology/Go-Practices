@@ -23,7 +23,7 @@ var hamMessages []string
 var spamMessages []string
 var allMessages []string
 
-// TODO: check error when paresed inputFile
+// TODO: check error when parsing inputFile
 func parseData() {
 	inputFile, _ := os.Open(dataPath)
 	reader := csv.NewReader(bufio.NewReader(inputFile))
