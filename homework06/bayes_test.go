@@ -14,9 +14,8 @@ const (
 	ham  bayesian.Class = "Ham"
 	spam bayesian.Class = "Spam"
 
-	dataPath   = "data/SMSSpamCollection"
-	testPath   = "data/testSMS"
-	resultPath = "data/results"
+	dataPath = "data/SMSSpamCollection"
+	testPath = "data/testSMS"
 )
 
 var hamMessages []string
