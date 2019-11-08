@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"encoding/csv"
 	"os"
-	"reflect"
 	"testing"
 
 	"github.com/jbrukh/bayesian"
@@ -21,6 +20,7 @@ const (
 var hamMessages []string
 var spamMessages []string
 var allMessages []string
+var allLabels []string
 
 // TODO: check error when parsing inputFile
 func parseData() {
@@ -39,6 +39,7 @@ func parseData() {
 			spamMessages = append(spamMessages, message[1])
 		}
 		allMessages = append(allMessages, message[1])
+		allLabels = append(allLabels, message[0])
 	}
 }
 
@@ -80,14 +81,20 @@ func Test_Bayes(T *testing.T) {
 	sms := readFile(testPath)
 	result1 := classifyMessages(sms)
 
-	NaiveBayesClassifier(allMessages, []string{"ham", "spam"})
 	var result2 []string
+	fitData(allMessages, allLabels)
 	for _, m := range sms {
 		label := predict(m)
 		result2 = append(result2, label)
 	}
 
-	if reflect.DeepEqual(result1, result2) == false {
-		T.Fatalf("Your algorithm is wrong")
+	// if reflect.DeepEqual(result1, result2) == false {
+	// 	T.Fatalf("Your algorithm is wrong")
+	// }
+
+	for i := 0; i < len(result2); i++ {
+		if result2[i] != result1[i] {
+			T.Errorf("Your prediction was incorrect with the message %d", i+1)
+		}
 	}
 }

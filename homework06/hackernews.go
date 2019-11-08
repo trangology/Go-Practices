@@ -4,9 +4,8 @@ import (
 	"net/http"
 )
 
-
 func main() {
-	getNews("https://news.ycombinator.com/newest", 1)
+	getNews("https://news.ycombinator.com/newest", 5)
 	http.HandleFunc("/home", Home)
 	http.HandleFunc("/update/", Update)
 	http.HandleFunc("/add_label/", AddLabel)

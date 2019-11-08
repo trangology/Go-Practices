@@ -2,26 +2,25 @@ package main
 
 import (
 	"fmt"
-	"github.com/PuerkitoBio/goquery"
 	"net/http"
+
+	"github.com/PuerkitoBio/goquery"
 )
 
 type News struct {
-	title string
+	title  string
 	author string
-	url string
-	score string
+	url    string
+	score  string
 }
 
 var news [][]News
 
-
-func check(e error)  {
-	if e != nil{
+func check(e error) {
+	if e != nil {
 		panic(e)
 	}
 }
-
 
 func getContent(url string) (body *goquery.Document) {
 	res, err := http.Get(url)
@@ -30,7 +29,7 @@ func getContent(url string) (body *goquery.Document) {
 	body, err = goquery.NewDocumentFromReader(res.Body)
 	check(err)
 
-	return 
+	return
 }
 
 func extractNews(parser *goquery.Document) []News {
@@ -52,7 +51,7 @@ func extractNews(parser *goquery.Document) []News {
 		scoreList = append(scoreList, score.Text())
 	})
 
-	for i := 0; i < len(titleList); i++{
+	for i := 0; i < len(titleList); i++ {
 		n.title = titleList[i]
 		n.author = authorList[i]
 		n.url = urlList[i]
@@ -63,17 +62,16 @@ func extractNews(parser *goquery.Document) []News {
 	return newsList
 }
 
-func extractNewPage(parser *goquery.Document) string{
+func extractNewPage(parser *goquery.Document) string {
 	link := parser.Find(".morelink")
 	result := link.Nodes[0].Attr[0].Val
 	return result
 }
 
-
-func getNews(url string, nPages int)  {
+func getNews(url string, nPages int) {
 	// Collect news from a given web page
 	fmt.Print("Collecting data from page: " + url)
-	for i := 1; i <= nPages; i++{
+	for i := 1; i <= nPages; i++ {
 		content := getContent(url)
 		newsList := extractNews(content)
 		nextPage := extractNewPage(content)
