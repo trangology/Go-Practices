@@ -14,8 +14,8 @@ type Classifier struct {
 
 var data []Classifier
 
-// amountWord is list of amount different words according labels
-var amountWord []int
+// labelWord is list of amount different words according labels
+var labelWord []int
 var uniqueLabels []string
 
 // allWord is total different words trained
@@ -53,7 +53,7 @@ func fitData(X []string, y []string) {
 				}
 			}
 		}
-		amountWord = append(amountWord, len(frequency))
+		labelWord = append(labelWord, len(frequency))
 		allWords += len(frequency)
 		var c Classifier
 		c.labels = label
@@ -85,14 +85,12 @@ func predict(x string) (result string) {
 		for _, word := range words {
 			frequency, ok := data[i].frequencies[word]
 			if frequency != 0 {
-				proba += math.Log((float64(frequency) + alpha) / float64(amountWord[i]+allWords))
+				proba += math.Log((float64(frequency) + alpha) / float64(labelWord[i]+allWords))
 			} else if !ok {
-				proba += math.Log(alpha / float64(amountWord[i]+allWords))
+				proba += math.Log(alpha / float64(labelWord[i]+allWords))
 			}
 		}
-		// x := float64()
-		k := math.Log(float64(amountWord[i]) / float64(allWords))
-		proba += k
+		proba += math.Log(float64(labelWord[i]) / float64(allWords))
 		probaTitle = append(probaTitle, proba)
 	}
 	result = findLabel(probaTitle)
