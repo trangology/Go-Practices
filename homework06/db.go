@@ -1,36 +1,37 @@
 package main
 
 import (
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/sqlite"
 	"html/template"
 	"net/http"
 	"net/url"
+
+	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/sqlite"
 )
 
 type HNews struct {
-	ID 			uint 	`gorm:"AUTO_INCREMENT"`
-	Title	 	string
-	Author	 	string
-	URL 		string
-	Score  		string
-	Label 		string
+	ID     uint `gorm:"AUTO_INCREMENT"`
+	Title  string
+	Author string
+	URL    string
+	Score  string
+	Label  string
 }
 
-func Update(w http.ResponseWriter, r *http.Request)  {
+func Update(w http.ResponseWriter, r *http.Request) {
 	db, err := gorm.Open("sqlite3", "./hnews.db")
 
 	defer db.Close()
 
-	if err != nil{
+	if err != nil {
 		panic("Cannot access to database")
 	}
 
 	db.CreateTable(&HNews{})
 
 	// creat database using sqlite, can view database by DB.Browser
-	for i := range news{
-		for _, item := range news[i]{
+	for i := range news {
+		for _, item := range news[i] {
 			hnews := HNews{Title: item.title, Author: item.author, URL: item.url, Score: item.score, Label: "none"}
 			db.Create(&hnews)
 		}
@@ -39,12 +40,12 @@ func Update(w http.ResponseWriter, r *http.Request)  {
 	http.Redirect(w, r, "/home", http.StatusFound)
 }
 
-func Home(w http.ResponseWriter, r *http.Request)  {
+func Home(w http.ResponseWriter, r *http.Request) {
 	db, err := gorm.Open("sqlite3", "./hnews.db")
 
 	defer db.Close()
 
-	if err != nil{
+	if err != nil {
 		panic("Cannot access to database")
 	}
 
@@ -61,8 +62,7 @@ func Home(w http.ResponseWriter, r *http.Request)  {
 	}
 }
 
-
-func AddLabel(w http.ResponseWriter, r *http.Request)  {
+func AddLabel(w http.ResponseWriter, r *http.Request) {
 	u, err := url.Parse(r.URL.RequestURI())
 	check(err)
 
@@ -71,7 +71,7 @@ func AddLabel(w http.ResponseWriter, r *http.Request)  {
 	currentID := q["id"][0]
 	db, err := gorm.Open("sqlite3", "./hnews.db")
 	defer db.Close()
-	if err != nil{
+	if err != nil {
 		panic("Cannot access to database")
 	}
 
@@ -79,7 +79,7 @@ func AddLabel(w http.ResponseWriter, r *http.Request)  {
 	http.Redirect(w, r, "/home", http.StatusFound)
 }
 
-func Recommendations(w http.ResponseWriter, r * http.Request)  {
+func Recommendations(w http.ResponseWriter, r *http.Request) {
 	db, _ := gorm.Open("sqlite3", "./hnews.db")
 
 	defer db.Close()
@@ -89,15 +89,15 @@ func Recommendations(w http.ResponseWriter, r * http.Request)  {
 
 	var titleList, labelList []string
 
-	for _, item := range hnews{
+	for _, item := range hnews {
 		titleList = append(titleList, item.Title)
 		labelList = append(labelList, item.Label)
 	}
-	NaiveBayesClassifier(titleList, labelList)
 
 	db.Where("Label = ?", "none").Find(&hnews)
+	fitData(titleList, labelList)
 
-	for _, item := range hnews{
+	for _, item := range hnews {
 		newLabel := predict(item.Title)
 		currentID := item.ID
 		db.Model(&HNews{}).Where("ID = ?", currentID).Update("Label", newLabel)
