@@ -1,14 +1,13 @@
 package main
 
 type Cell struct {
-	row int
-	col int
+	row   int
+	col   int
 	state bool
 }
 
-
-// find all neighbours are living
-func (c * Cell) GetNeighbours(row, col int, cl CellList) (neighbours int) {
+// GetNeighbours finds all neighbours are living
+func (c *Cell) GetNeighbours(row, col int, cl CellList) (neighbours int) {
 	around := [8][2]int{{-1, -1}, {0, -1}, {1, -1}, {1, 0}, {1, 1}, {0, 1}, {-1, 1}, {-1, 0}}
 	neighbours = 0
 
@@ -25,8 +24,7 @@ func (c * Cell) GetNeighbours(row, col int, cl CellList) (neighbours int) {
 	return
 }
 
-
-func makeCell(row int, col int, value int) (cell Cell){
+func makeCell(row int, col int, value int) (cell Cell) {
 	var state bool
 	if value == 1 {
 		state = true
