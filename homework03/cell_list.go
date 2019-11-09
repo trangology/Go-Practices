@@ -4,28 +4,28 @@ import (
 	"math/rand"
 )
 
+// CellList is list of Cel
 type CellList struct {
-	grid [][]Cell
-	width int
+	grid   [][]Cell
+	width  int
 	height int
 }
 
-// update life for all cells of list
+// Update -> update life for all cells of list
 func (cl CellList) Update() [][]Cell {
-	for i, row := range cl.grid{
-		for j, cell := range row{
+	for i, row := range cl.grid {
+		for j, cell := range row {
 			neighbours := cell.GetNeighbours(i, j, cl)
 			if cell.state && (neighbours < 2 || neighbours > 3) {
-				cl.grid[i][j].state = false			// can not declarate cell.state = false. Must to find answer!!!
+				cl.grid[i][j].state = false
 			}
-			if !cell.state && neighbours == 3{
+			if !cell.state && neighbours == 3 {
 				cl.grid[i][j].state = true
 			}
 		}
 	}
 	return cl.grid
 }
-
 
 func randomGrid(nrows, ncols int) [][]Cell {
 	// make empty 2d array of Cell struct
@@ -35,8 +35,8 @@ func randomGrid(nrows, ncols int) [][]Cell {
 	}
 
 	// fill "grid" array
-	for i := 0; i < nrows; i++{
-		for j := 0; j < ncols; j++{
+	for i := 0; i < nrows; i++ {
+		for j := 0; j < ncols; j++ {
 			grid[i][j] = makeCell(i, j, rand.Intn(2))
 		}
 	}
