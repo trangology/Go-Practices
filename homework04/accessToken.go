@@ -31,5 +31,5 @@ func getAccessToken() {
 		"&scope=" + scope +
 		"&response_type=token" +
 		"&display=page"
-	openbrowser(url)
+	openBrowser(url)
 }
