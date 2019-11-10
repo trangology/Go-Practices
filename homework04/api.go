@@ -35,23 +35,21 @@ type HistoryMessage struct {
 
 type Message struct {
 	Date              int64               `json:"date"`
-	FromId            int                 `json:"from_id"`
-	Id                int                 `json:"id"`
+	FromID            int                 `json:"from_id"`
+	ID                int                 `json:"id"`
 	Out               int                 `json:"out"`
-	PeerId            int                 `json:"peer_id"`
+	PeerID            int                 `json:"peer_id"`
 	Text              string              `json:"text"`
-	MessageId         int                 `json:"message_id"`
+	MessageID         int                 `json:"message_id"`
 	ForwardedMessages []*ForwardedMessage `json:"fwd_messages"`
 	Important         bool                `json:"important"`
-	RandomId          int                 `json:"random_id"`
-	//Attachments			[]*Attachment		`json:"attachments"`
+	RandomID          int                 `json:"random_id"`
 }
 
 type ForwardedMessage struct {
-	UID  int    `json:"user_id"`
-	Date int64  `json:"date"`
-	Body string `json:"body"`
-	//Attachments       []*MessageAttachment `json:"attachments"`
+	UID               int                 `json:"user_id"`
+	Date              int64               `json:"date"`
+	Body              string              `json:"body"`
 	ForwardedMessages []*ForwardedMessage `json:"fwd_messages"`
 }
 
@@ -72,7 +70,7 @@ func get(url string, maxRetries int, backoffFactor float64) interface{} {
 	return nil
 }
 
-func getFriends() interface{} {
+func getFriends(userID string, fields string) interface{} {
 	query := VkConfig["domain"] + "friends.get?" +
 		VkConfig["accessToken"] + "&fields=bdate" +
 		VkConfig["version"]
@@ -92,10 +90,10 @@ func getFriends() interface{} {
 	return nil
 }
 
-func getHistoryMessage(userId int64, offset int64, count int64) interface{} {
+func getHistoryMessage(userID int64, offset int64, count int64) interface{} {
 	query := VkConfig["domain"] + "messages.getHistory?" +
 		VkConfig["accessToken"] +
-		"&user_id=" + strconv.FormatInt(userId, 10) +
+		"&user_id=" + strconv.FormatInt(userID, 10) +
 		"&offset=" + strconv.FormatInt(offset, 10) +
 		"&count=" + strconv.FormatInt(count, 10) +
 		VkConfig["version"]

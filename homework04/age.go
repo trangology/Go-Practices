@@ -38,8 +38,8 @@ func diff(d1 int, m1 int, y1 int) int {
 	return years
 }
 
-func agePredict() {
-	friends := getFriends().([]*User)
+func agePredict(userID string) {
+	friends := getFriends(userID, "bdate").([]*User)
 	var ageList []int
 	var sumAges int
 
@@ -47,8 +47,8 @@ func agePredict() {
 		birthday := friend.BDate
 
 		if len(birthday) >= 8 {
-			d, m, y := getDate(birthday)        // get day, month, year from string
-			age := diff(int(d), int(m), int(y)) // get age of people, diff = difference
+			d, m, y := getDate(birthday)
+			age := diff(int(d), int(m), int(y))
 			ageList = append(ageList, age)
 			sumAges += age
 		}
@@ -59,8 +59,7 @@ func agePredict() {
 	}
 }
 
+// Add your user ID below
 func main() {
-	getAccessToken() //  after use this function to get access token, you can delete and use only function agePredict
-	agePredict()
-	printMess()
+	agePredict("")
 }

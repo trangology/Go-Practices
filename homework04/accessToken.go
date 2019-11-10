@@ -14,7 +14,7 @@ func openbrowser(url string) {
 	case "linux":
 		err = exec.Command("xdg-open", url).Start()
 	case "windows":
-		err = exec.Command("rundll32", "url.dll,FileProtocolHandler", url).Start()
+		err = exec.Command("rundll32", "url.dll, FileProtocolHandler", url).Start()
 	case "darwin":
 		err = exec.Command("open", url).Start()
 	default:
@@ -26,7 +26,7 @@ func openbrowser(url string) {
 }
 
 func getAccessToken() {
-	var url = "https://oauth.vk.com/authorize?client_id=" + clientId +
+	var url = "https://oauth.vk.com/authorize?client_id=" + clientID +
 		"&redirect_uri=https://oauth.vk.com/blank.html" +
 		"&scope=" + scope +
 		"&response_type=token" +
