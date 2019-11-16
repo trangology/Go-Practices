@@ -30,12 +30,14 @@ func getPage(group string) (content *goquery.Document) {
 }
 
 func parseSchedule(doc *goquery.Document, day string) [][]string {
-	var timeList, locationList, lesionList []string
+	var timeList, locationList, lessonList []string
 	doc.Find("table").Each(func(i int, tableTag *goquery.Selection) {
 		idName, _ := tableTag.Attr("id")
 		if idName == day {
+
 			// find all tags <td>
 			tableTag.Find("td").Each(func(i int, TdTag *goquery.Selection) {
+
 				// find all tags <span> in tag <td>
 				TdTag.Find("span").Each(func(i int, spanTag *goquery.Selection) {
 					className, _ := spanTag.Parent().Attr("class")
@@ -57,30 +59,30 @@ func parseSchedule(doc *goquery.Document, day string) [][]string {
 					}
 					if className == "lesson" {
 						strings.Replace(tdTag.Text(), "\t", "", -1)
-						lesionList = append(lesionList, tdTag.Text())
+						lessonList = append(lessonList, tdTag.Text())
 					}
 				})
 			})
 		}
 	})
-	schedule = append(schedule, timeList, locationList, lesionList)
+	schedule = append(schedule, timeList, locationList, lessonList)
 	return schedule
 }
 
-func res(result int) (reply string) {
-	if result == 0 {
+func res(req int) (reply string) {
+	if req == 0 {
 		reply = "Trang, you have no class on this day :))"
 	}
 
-	if 0 < result && result < 7 {
-		// result * 3 for timeList, locationList and lesionList
-		index := result * 3
+	if 0 < req && req < 7 {
+		// req * 3 for timeList, locationList and lessonList
+		index := req * 3
 		for k := 0; k < len(schedule[index]); k++ {
 			reply += schedule[index][k] + "\n" + schedule[index+1][k] + "\n" + schedule[index+2][k] + "\n\n"
 		}
 	}
 
-	if result == 7 {
+	if req == 7 {
 		for i := 0; i < 21; i = i + 3 {
 			if i != 0 {
 				reply += strings.ToUpper(weekDay[i/3]) + "\n\n"
@@ -166,7 +168,7 @@ func main() {
 
 		/** switch update.Message.Command() {
 		case "start":
-			reply = "Hello. I'm cute bot :3"
+			reply = "Hey, buddy! I'm cute bot :3"
 		case "i am sad":
 			reply = "Me too :("
 		**/
