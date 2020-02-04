@@ -1,2 +1,1 @@
-**My assignments using Golang.
-It was written from scratch.**
+**This repo is written from scratch**
