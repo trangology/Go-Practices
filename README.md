@@ -1,2 +1,4 @@
-# Go-Practices
-My assignments using Golang 
+## Go-Practices
+
+My assignments using Golang. 
+It was written from scratch.
