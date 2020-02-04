@@ -1,1 +1,1 @@
-### Analytics some information from user via [VKontakte](https://vk.com) API 
+### Analytics some user's information via [VKontakte](https://vk.com) API 
