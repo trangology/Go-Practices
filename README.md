@@ -17,10 +17,10 @@
 **Assignments in the spring semester 2019**
 | Name | Detail |
 | ------ | ------ |
-| [homework06](https://github.com/trangology/Go-Practices/tree/master/homework06) | A local site displays news from [Hacker News](https://news.ycombinator.com/) |
+| [homework06](https://github.com/trangology/Go-Practices/tree/master/homework06) | A simple recommendation system using [Bayes Classifier](https://en.wikipedia.org/wiki/Bayes_classifier) to display news from [Hacker News](https://news.ycombinator.com/) |
 | [homework07](https://github.com/trangology/Go-Practices/tree/master/homework07) | Parallel processing in Go works similarly [pool.map](https://github.com/python/cpython/blob/master/Lib/multiprocessing/pool.py#L359) in Python |
 | [homework08](https://github.com/trangology/Go-Practices/tree/master/homework08) | A very small local app for taking notes using [Buffalo](https://gobuffalo.io/en/) |
 
 <br />
 
-**DO NOT RESUBMIT THIS REPO FOR EXTRA CREDITS AT THE UNIVERSITY!!!**
+:negative_squared_cross_mark: **DO NOT RESUBMIT THIS REPO FOR EXTRA CREDITS AT THE UNIVERSITY!!!**
